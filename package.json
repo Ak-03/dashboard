@@ -1,6 +1,6 @@
 {
-  "homepage": "http://Ak-03.github.io/Dashboard",
   "name": "dashboard",
+  "homepage": "http://Ak-03.github.io/Dashboard",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
