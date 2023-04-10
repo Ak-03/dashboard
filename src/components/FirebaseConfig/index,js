@@ -1,0 +1,20 @@
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+
+function StartFirebase() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyC30bS5dGiS_E5wBHKPdRXlFNmrimFHCV8",
+    authDomain: "dashboard-16fa4.firebaseapp.com",
+    databaseURL: "https://dashboard-16fa4-default-rtdb.firebaseio.com",
+    projectId: "dashboard-16fa4",
+    storageBucket: "dashboard-16fa4.appspot.com",
+    messagingSenderId: "844383955684",
+    appId: "1:844383955684:web:3182601d9cdb33259c1af1",
+    measurementId: "G-9EGK55HGSJ",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  return getDatabase(app);
+}
+
+export default StartFirebase;

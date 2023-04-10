@@ -4,18 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import "./index.css";
 
 const PrintoutPage = (props) => {
-  const { customerDetails } = props;
-  const {
-    name,
-    email,
-    number,
-    trip,
-    stay,
-    count,
-    amount,
-    city,
-    startDate,
-  } = customerDetails;
+  const { details } = props;
+  const { name, trip, stay, startDate, count, amount } = details;
 
   const [discount, setDiscount] = useState(0);
   const [due, setDue] = useState(0);
@@ -23,33 +13,6 @@ const PrintoutPage = (props) => {
   const len = uuidv4().slice(33, 36);
 
   const componentRef = useRef();
-
-  const postData = async (event) => {
-    event.preventDefault();
-
-    const res = await fetch(
-      "https://dashboard-16fa4-default-rtdb.firebaseio.com/ananddatabase.json",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: "BG" + len,
-          name,
-          email,
-          number,
-          trip,
-          stay,
-          count,
-          amount,
-          city,
-          startDate,
-        }),
-      }
-    );
-    console.log(res.status);
-  };
 
   const onChangedis = (event) => {
     setDiscount(event.target.value);
@@ -59,11 +22,11 @@ const PrintoutPage = (props) => {
     setDue(event.target.value);
   };
 
-  const disCountAmount = count * discount - count * amount;
-
+  const disAmount = count * discount;
   const totalAmount = count * amount;
+  const disCountAmount = disAmount - totalAmount;
 
-  const paid = totalAmount + disCountAmount - due;
+  const paid = disAmount - due;
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, "0");
@@ -105,7 +68,7 @@ const PrintoutPage = (props) => {
                 <span>Invoice #</span>
               </th>
               <td>
-                <span>BG{len}</span>
+                <span>BGH{len}</span>
               </td>
             </tr>
             <tr>
@@ -148,11 +111,11 @@ const PrintoutPage = (props) => {
                   <span>{count}</span>
                 </td>
                 <td>
-                  <span data-prefix>$</span>
+                  <span data-prefix></span>
                   <span>{amount}</span>
                 </td>
                 <td>
-                  <span data-prefix>$</span>
+                  <span data-prefix></span>
                   <span>{totalAmount}</span>
                 </td>
               </tr>
@@ -164,7 +127,7 @@ const PrintoutPage = (props) => {
                 <span>Total</span>
               </th>
               <td>
-                <span data-prefix>$</span>
+                <span data-prefix></span>
                 <span>{totalAmount}</span>
               </td>
             </tr>
@@ -173,8 +136,10 @@ const PrintoutPage = (props) => {
                 <span>Discount</span>
               </th>
               <td>
-                <span data-prefix>$</span>
-                <span>{disCountAmount}</span>
+                <span data-prefix></span>
+                <span>
+                  {disAmount}({disCountAmount})
+                </span>
               </td>
             </tr>
             <tr>
@@ -182,7 +147,7 @@ const PrintoutPage = (props) => {
                 <span>Amount Paid</span>
               </th>
               <td>
-                <span data-prefix>$</span>
+                <span data-prefix></span>
                 <span>{due}</span>
               </td>
             </tr>
@@ -191,23 +156,19 @@ const PrintoutPage = (props) => {
                 <span>Balance Due</span>
               </th>
               <td>
-                <span data-prefix>$</span>
+                <span data-prefix></span>
                 <span>{paid}</span>
               </td>
             </tr>
           </table>
         </article>
         <aside>
-          <div>
-            Rs.{due}/- payment done ✔
-            <p>⭐THIS BILL MAY DIFFER DUE TO WAIVED OFF PAYMENT ⭐</p>
-          </div>
+          <div>Rs.{due}/- payment done ✔</div>
         </aside>
       </div>
       <div className="button">
         <div>
           <input type="number" onChange={onChangedis} placeholder="dis" />
-          <button type="button">Cal</button>
         </div>
         <div>
           <input
@@ -218,7 +179,7 @@ const PrintoutPage = (props) => {
         </div>
         <ReactToPrint
           trigger={() => (
-            <button type="button" onClick={postData} className="b1">
+            <button type="button" className="b1">
               Print
             </button>
           )}

@@ -1,17 +1,14 @@
 import Dashboard from "./components/Dashboard";
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 const App = () => {
   return (
-    <div className="main-body">
-      <div className="nav-bar">
-        <Navbar />
-      </div>
-      <div className="container-box">
-        <Dashboard />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
