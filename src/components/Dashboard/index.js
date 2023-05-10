@@ -39,7 +39,8 @@ function Dashboard() {
     } = user;
 
     const res = await fetch(
-      "https://dashboard-16fa4-default-rtdb.firebaseio.com/ananddatabase.json",
+      "https://script.google.com/macros/s/AKfycbyzlSvHkb7sQ1Lfftj9NrV4tKVk0J5SGbbbz9mLhz4/dev/",
+      { mode: "no-cors" },
       {
         method: "POST",
         headers: {
@@ -177,7 +178,7 @@ function Dashboard() {
               />
             </div>
           </form>
-          <button type="button" onClick={postData}>
+          <button type="submit" onClick={postData}>
             submit
           </button>
         </div>
